@@ -1,0 +1,122 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class Basketball {
+//private variables so data is stored outside of loop and not reset 
+    private Random score = new Random();
+    private Random text = new Random();
+    private Scanner reader = new Scanner(System.in);
+    private int scoreboard;
+    private boolean running = true;
+
+    public Basketball() {
+        //call variables to public method Basketball so they are accessible in
+        //main
+        this.text = new Random();
+        this.score = new Random();
+        this.reader = new Scanner(System.in);
+        this.scoreboard = 0;
+    }
+
+    public void cleanUp() {
+        this.reader.close();
+    }
+
+    public static void main(String[] args) {
+        Basketball game = new Basketball();
+        while (game.isRunning()) {
+            game.progressGameLoop();
+        }
+        game.cleanUp();
+        System.out.println("GG GAME OVER");
+    }
+
+    public void progressGameLoop() {
+
+        int intro = text.nextInt(4);
+       
+
+        if (intro == 1) {
+            System.out.println("You're dribbling up the lane, what do you do?");
+        }
+        if (intro == 2) {
+            System.out.println("You get passed the ball what do you do?");
+        }
+        if (intro == 3) {
+            System.out.println("You rebound the ball, what do you?");
+        }
+
+        System.out.println("1. Shoot from 3");
+        System.out.println("2. Drive in and lay up");
+        System.out.println("3. Post up and fadeaway");
+        System.out.println("4. Drive in and dunk");
+        int move = reader.nextInt();
+        int chance = score.nextInt(10) + 1;
+
+        if (move == 1) {
+            if (chance >= 7) {
+                System.out.println("Swish! You scored a 3!");
+                scoreboard = scoreboard + 3;
+            }
+            if (chance < 7) {
+                System.out.println("Aw! You missed, try again");
+            }
+
+        }
+        if (move == 2) {
+            if (chance >= 5) {
+                System.out.println("You made the basket!");
+                scoreboard = scoreboard + 2;
+            }
+            if (chance < 5) {
+                System.out.println("You missed!");
+            }
+        }
+
+        if (move == 3) {
+            if (chance >= 3) {
+                System.out.println("You made the shot!");
+                scoreboard = scoreboard + 2;
+            }
+            if (chance < 2) {
+                System.out.println("You missed!");
+            }
+        }
+
+        if (move == 4) {
+            if (chance > 1) {
+                System.out.println("You jammed it in!");
+                scoreboard = scoreboard + 2;
+            }
+            if (chance <= 1) {
+                System.out.println("You got blocked!");
+            }
+        }
+
+        if (move > 5) {
+            System.out.println("Error, illegal move");
+        }
+
+        System.out.println("The score is " + scoreboard);
+
+        if (scoreboard >= 21) {
+            setRunning(false);
+        }
+    }
+
+    public int getScoreboard() {
+        return scoreboard;
+
+    }
+
+    public boolean isRunning() {
+        return running;
+
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+
+    }
+
+}
